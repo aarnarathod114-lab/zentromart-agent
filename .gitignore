@@ -1,0 +1,6 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+dataset/
+tickets_created.csv
