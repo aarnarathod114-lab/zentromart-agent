@@ -1,0 +1,10 @@
+groq
+openai
+python-dotenv
+pandas
+numpy
+sentence-transformers
+rank-bm25
+gnani-vachana
+sounddevice
+soundfile
