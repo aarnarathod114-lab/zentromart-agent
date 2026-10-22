@@ -4,3 +4,6 @@ __pycache__/
 *.pyc
 dataset/
 tickets_created.csv
+recordings/
+mic_test.wav
+tts_test.wav

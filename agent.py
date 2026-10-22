@@ -31,6 +31,10 @@ CAL_FIELDS = ("delivered_on", "return_pickup_on", "return_refund_initiated_on",
 MAX_FAILED = 2      # first attempt + one retry
 HISTORY_LIMIT = 10  # last 5 exchanges kept in the prompt
 DECISIONS = {"answer", "clarify", "escalate", "refuse"}
+TICKET_TOO_EARLY = {"created": False,
+                    "error": ("Verification just succeeded and the customer has not asked anything "
+                              "yet. Do not create a ticket now; confirm verification and ask how "
+                              "you can help.")}
 
 SYSTEM = """You are ZentroMart's AI customer-support assistant (ZentroMart is an Indian online store).
 Today's date is 20 October 2026. Use it for every deadline and delay calculation.
@@ -212,6 +216,7 @@ class SupportAgent:
         self.failed = {}
         self.secrets = set()
         self.tokens = 0
+        self.just_verified = False
 
     # ---------- tools (with safety rules enforced in code) ----------
     def _lookup(self, order_id, verification_value=None):
@@ -229,6 +234,7 @@ class SupportAgent:
         result = lookup_order(oid, value)
         if result.get("verified"):
             self.order = compact_order(result)
+            self.just_verified = True
             return {"verified": True, "order": self.order}
         self.failed[oid] = self.failed.get(oid, 0) + 1
         left = MAX_FAILED - self.failed[oid]
@@ -237,6 +243,8 @@ class SupportAgent:
                            else "Do not retry; share no details; offer a human colleague.")}
 
     def _ticket(self, summary="", order_id=None, reason=None, intent=None):
+        if self.just_verified:   # no handover before the customer has said what they need
+            return TICKET_TOO_EARLY
         summary = self._redact(summary or "")
         return create_ticket(summary=summary, order_id=digits(order_id) or self.order_id,
                              reason=reason, intent=intent)
@@ -314,6 +322,7 @@ class SupportAgent:
     # ---------- one customer turn ----------
     def turn(self, message):
         t0 = time.time()
+        self.just_verified = False
         query_en = self._rewrite(message)
         items, context = self._context(message, query_en)
         messages = [{"role": "system", "content": SYSTEM},
