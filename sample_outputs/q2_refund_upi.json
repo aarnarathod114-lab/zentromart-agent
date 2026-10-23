@@ -2,11 +2,12 @@
   "file": "q2_refund_upi.wav",
   "transcript": "if my refund goes to upi how many days will it take",
   "stt_method": "rest",
-  "stt_s": 0.5,
+  "stt_s": 0.91,
   "decision": "answer",
-  "reply": "For refunds to a UPI ID, the amount will reach you in 1 to 3 business days after the refund is initiated.",
+  "reply": "Hello! I'm ZentroMart's AI support assistant. If your refund goes to UPI, it typically takes 1 to 3 business days to reach you.",
   "cited_ids": [
-    "REF-2"
+    "REF-2",
+    "STY-1"
   ],
   "tool_calls": [],
   "retrieved_chunks": [
@@ -25,18 +26,18 @@
       "text": "Returned items go through a quality check (QC) at the warehouse. The refund is initiated within 2 business days of pickup once the item passes QC. For ZentroMart Plus members, the refund is initiated at the time of pickup. Refund timelines after initiation are in the Refunds policy."
     },
     {
-      "id": "REF-1",
-      "title": "Refunds policy",
-      "heading": "When a refund is initiated",
-      "status": "current",
-      "text": "- **Cancelled before shipping:** immediately on cancellation.\n- **Returned item:** after the item passes quality check, within 2 business days of pickup. ZentroMart Plus members: at pickup.\n- **Prepaid order refused at the door or not delivered after 3 attempts:** once the parcel reaches the warehouse, usually 7 to 10 calendar days after the last delivery attempt."
-    },
-    {
       "id": "PLS-3",
       "title": "ZentroMart Plus membership",
       "heading": "Cancelling membership",
       "status": "current",
       "text": "Membership can be cancelled within 14 days of purchase for a full refund if no benefit has been used."
+    },
+    {
+      "id": "REF-1",
+      "title": "Refunds policy",
+      "heading": "When a refund is initiated",
+      "status": "current",
+      "text": "- **Cancelled before shipping:** immediately on cancellation.\n- **Returned item:** after the item passes quality check, within 2 business days of pickup. ZentroMart Plus members: at pickup.\n- **Prepaid order refused at the door or not delivered after 3 attempts:** once the parcel reaches the warehouse, usually 7 to 10 calendar days after the last delivery attempt."
     },
     {
       "id": "FAQ-1",
@@ -158,8 +159,8 @@
       "text": "Never read out the full phone number, email or street address, even to a verified customer."
     }
   ],
-  "agent_s": 49.47,
-  "tts_s": 2.45,
+  "agent_s": 4.27,
+  "tts_s": 5.16,
   "reply_audio": "q2_refund_upi_reply.wav",
   "error": ""
 }

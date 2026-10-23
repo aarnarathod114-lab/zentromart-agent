@@ -2,12 +2,12 @@
   "file": "q1_return_window.wav",
   "transcript": "what is the return window for electronics",
   "stt_method": "rest",
-  "stt_s": 0.91,
+  "stt_s": 0.78,
   "decision": "answer",
-  "reply": "Electronics and accessories have a 7‑day return window counted in calendar days from the delivery date (for items delivered on or after 1 August 2026).",
+  "reply": "Hello! I'm ZentroMart's AI support assistant. For electronics delivered on or after 1 August 2026, the return window is 7 days from the delivery date, while items delivered before that date keep the earlier 10-day window.",
   "cited_ids": [
-    "RET-2",
-    "RET-3"
+    "RET-3",
+    "STY-1"
   ],
   "tool_calls": [],
   "retrieved_chunks": [
@@ -40,6 +40,13 @@
       "text": "Exchanges for a different size or colour are available on clothing and footwear within the return window, subject to stock. If the new size is out of stock, a return and refund is offered instead."
     },
     {
+      "id": "PLS-2",
+      "title": "ZentroMart Plus membership",
+      "heading": "Benefits",
+      "status": "current",
+      "text": "- Free Express delivery where Express is available.\n- No reverse pickup fee on any return.\n- Refunds on returns are initiated at pickup, without waiting for quality check.\n\nZentroMart Plus does **not** change return windows, return eligibility or refund timelines after initiation."
+    },
+    {
       "id": "RET-1",
       "title": "Returns policy",
       "heading": "Scope",
@@ -47,11 +54,11 @@
       "text": "This policy covers items bought on ZentroMart, whether shipped by ZentroMart or by a marketplace seller. Seller-specific warranty terms are in the Marketplace sellers policy, but return windows are the same for every seller."
     },
     {
-      "id": "DWM-4",
-      "title": "Damaged, wrong or missing items policy",
-      "heading": "Reported after 48 hours",
+      "id": "products.csv:ELE-0010",
+      "title": "Product catalog",
+      "heading": "",
       "status": "current",
-      "text": "Reports after 48 hours are handled as a normal return if the item is still within its return window. Otherwise the customer can use the brand or ZentroMart Assured warranty, if any."
+      "text": "sku: ELE-0010; title: Voltra 65W GaN Fast Charger, Green; brand: Voltra; return_category: electronics; price_inr: 2189; fulfilled_by: Sunrise Electronics; assured: True; warranty_months: 12; description: Voltra 65W GaN Fast Charger, Green. Sold on ZentroMart. Ships from a marketplace seller."
     },
     {
       "id": "products.csv:ELE-0020",
@@ -59,13 +66,6 @@
       "heading": "",
       "status": "current",
       "text": "sku: ELE-0020; title: Zentro Vista 43-inch 4K Smart TV, Beige; brand: Zentro; return_category: electronics; price_inr: 31809; fulfilled_by: ZentroMart; assured: False; warranty_months: 12; description: Zentro Vista 43-inch 4K Smart TV, Beige. Sold on ZentroMart."
-    },
-    {
-      "id": "products.csv:ELE-0001",
-      "title": "Product catalog",
-      "heading": "",
-      "status": "current",
-      "text": "sku: ELE-0001; title: Nimbus X2 Wireless Earbuds, Beige; brand: Nimbus; return_category: electronics; price_inr: 2199; fulfilled_by: ZentroMart; assured: True; warranty_months: 12; description: Nimbus X2 Wireless Earbuds, Beige. Sold on ZentroMart."
     },
     {
       "id": "KB-00.1",
@@ -173,8 +173,8 @@
       "text": "Never read out the full phone number, email or street address, even to a verified customer."
     }
   ],
-  "agent_s": 2.56,
-  "tts_s": 2.66,
+  "agent_s": 4.71,
+  "tts_s": 8.91,
   "reply_audio": "q1_return_window_reply.wav",
   "error": ""
 }
