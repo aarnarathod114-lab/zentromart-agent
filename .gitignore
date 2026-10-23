@@ -6,4 +6,6 @@ dataset/
 tickets_created.csv
 recordings/
 mic_test.wav
-tts_test.wavdemo_build/
+tts_test.wav
+demo_build/
+outputs/
