@@ -1,5 +1,6 @@
 """Step 4: ZentroMart voice support agent.
-Customer voice -> Gnani STT (WebSocket) -> agent (memory + RAG + tools) -> Gnani TTS (WebSocket).
+Customer voice -> Gnani STT (WebSocket, streamed while speaking) -> agent (memory + RAG + tools)
+-> Gnani TTS (WebSocket) -> spoken reply.
 
 Usage:
   python run.py                                 # live mic, press Enter before each turn
@@ -9,6 +10,7 @@ Options: --model openai/gpt-oss-20b  --lang hi-IN  --voice Kaveri  --seconds 7
 """
 import argparse
 import csv
+import re
 import time
 from datetime import datetime
 from pathlib import Path
@@ -17,12 +19,13 @@ import soundfile as sf
 
 from agent import SupportAgent
 from retriever import Retriever
-from voice import SR, load_wav, record, speak, transcribe
+from voice import SR, listen, load_wav, speak, transcribe
 
 REC = Path("recordings")
 LOG = Path("results") / "step4_voice_log.csv"
 FIELDS = ["time", "model", "mode", "user_audio", "transcript", "stt_s", "decision", "tools",
           "reply", "agent_s", "tts_s", "reply_audio", "total_s"]
+HINDI_NOTE = "\n(The customer is speaking Hindi: reply in Hindi, written in Devanagari script.)"
 
 
 def log_turn(row):
@@ -40,10 +43,8 @@ def describe(call):
     args = ", ".join(f"{k}={'****' if k == 'verification_value' else v}"
                      for k, v in call["args"].items() if k != "summary")
     res = call["result"]
-    if call["name"] == "lookup_order":
-        status = f"verified={bool(res.get('verified'))}"
-    else:
-        status = f"created={bool(res.get('created'))}"
+    status = (f"verified={bool(res.get('verified'))}" if call["name"] == "lookup_order"
+              else f"created={bool(res.get('created'))}")
     return f"{call['name']}({args}) -> {status}"
 
 
@@ -52,7 +53,7 @@ def main():
     p.add_argument("--model", default="openai/gpt-oss-20b")
     p.add_argument("--lang", default="hi-IN", help="Gnani STT language, e.g. hi-IN or en-IN")
     p.add_argument("--voice", default="Kaveri", help="Gnani TTS voice")
-    p.add_argument("--seconds", type=int, default=7, help="recording length per turn")
+    p.add_argument("--seconds", type=int, default=7, help="listening time per turn")
     p.add_argument("--text", action="store_true", help="type messages instead of speaking")
     p.add_argument("--wav", nargs="*", help="voice-message WAV files to play in, in order")
     args = p.parse_args()
@@ -73,22 +74,20 @@ def main():
 
         if args.text:
             transcript = input("You: ").strip()
-        else:
-            if args.wav is not None:
-                if not queue:
-                    break
-                path = queue.pop(0)
-                audio = load_wav(path)
-                user_audio = path
-                print(f"Voice message: {path}")
-            else:
-                if input("Press Enter and speak (or type exit): ").strip().lower() == "exit":
-                    break
-                audio = record(args.seconds)
-                user_audio = str(REC / f"{session}_t{turn}_customer.wav")
-                sf.write(user_audio, audio, SR)
-            transcript, stt_s = transcribe(audio, args.lang)
+        elif args.wav is not None:
+            if not queue:
+                break
+            user_audio = queue.pop(0)
+            print(f"Voice message: {user_audio}")
+            transcript, stt_s = transcribe(load_wav(user_audio), args.lang)
             print(f"You (STT, {stt_s}s): {transcript}")
+        else:
+            if input("Press Enter and speak (or type exit): ").strip().lower() == "exit":
+                break
+            audio, transcript, stt_s = listen(args.seconds, args.lang)
+            user_audio = str(REC / f"{session}_t{turn}_customer.wav")
+            sf.write(user_audio, audio, SR)
+            print(f"You (STT, {stt_s}s after you stopped): {transcript}")
 
         if transcript.lower() in ("exit", "quit"):
             break
@@ -96,8 +95,9 @@ def main():
             print("   (nothing heard; please try again)\n")
             continue
 
+        message = transcript + (HINDI_NOTE if re.search(r"[\u0900-\u097F]", transcript) else "")
         a0 = time.time()
-        out = agent.turn(transcript)
+        out = agent.turn(message)
         agent_s = round(time.time() - a0, 2)
         tools = " ; ".join(describe(c) for c in out["tool_calls"])
         print(f"Agent [{out['decision']}] ({agent_s}s): {out['reply']}")
