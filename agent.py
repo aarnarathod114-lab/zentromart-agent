@@ -362,7 +362,7 @@ class SupportAgent:
         if any(_norm(c) not in known for c in claims):
             data.update({"decision": "escalate", "evidence": []})
             reply = UNKNOWN_HI if DEVANAGARI_RE.search(reply) else UNKNOWN_EN
-        elif str(data.get("decision", "")).lower() == "answer" and not self._supported(reply, context):
+        elif str(data.get("decision", "")).lower() in ("answer", "") and not self._supported(reply, context):
             data.update({"decision": "escalate", "evidence": []})
             reply = UNKNOWN_HI if DEVANAGARI_RE.search(reply) else UNKNOWN_EN
         if first and not AI_RE.search(reply):
@@ -375,13 +375,17 @@ class SupportAgent:
         sources, calendar = (context[:cut], context[cut:]) if cut >= 0 else (context, "")
         prompt = (f"SOURCES:\n{sources[:8000]}\n\n{calendar[:4000]}\n\n{self._state()}\n\n"
                   f"REPLY: {reply}")
-        try:
-            text = self._helper(max_completion_tokens=400, response_format={"type": "json_object"},
-                                messages=[{"role": "system", "content": VERIFY},
-                                          {"role": "user", "content": prompt}])
-            return json.loads(re.search(r"\{.*\}", text, re.S).group(0)).get("supported", True) is not False
-        except Exception:
-            return True          # never block a reply because the checker itself failed
+        for attempt in range(2):
+            try:
+                text = self._helper(max_completion_tokens=400, response_format={"type": "json_object"},
+                                    messages=[{"role": "system", "content": VERIFY},
+                                              {"role": "user", "content": prompt}])
+                ok = json.loads(re.search(r"\{.*\}", text, re.S).group(0)).get("supported", True) is not False
+                print(f"   [grounding check: {'supported' if ok else 'NOT supported -> I do not know'}]")
+                return ok
+            except Exception as e:
+                print(f"   [grounding check error: {type(e).__name__}; {'retrying' if attempt == 0 else 'letting reply through'}]")
+        return True              # never block a reply because the checker itself failed
 
     # ---------- one customer turn ----------
     def turn(self, message):
