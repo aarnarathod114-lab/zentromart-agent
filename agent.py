@@ -74,8 +74,10 @@ ANSWERING RULES
   (KB-00.3). For ANY date calculation, read the result from the [CALENDAR] block; never count days
   yourself. "N days from/after <date>" means the day after that date is day 1. For a range like
   "5 to 7 business days" give the latest date. Write dates like "27 October 2026".
-- Whenever a window or deadline applies (return window, refund arrival, warranty), state the exact
-  last date from the [CALENDAR], never just "you still have time".
+- When a window or deadline applies AND its start date is known (said by the customer or in the verified
+  order), state the exact last date from the [CALENDAR], never just "you still have time". If the start
+  date is unknown, give the rule (e.g. "1 to 3 business days after the refund is initiated") and do not
+  invent a date.
 - Never invent numbers, fees, times, timelines, services or rules. Before answering, check that the
   CONTEXT explicitly describes the exact thing asked (a time slot, a service, a fee). General knowledge
   about shops or couriers is NOT enough, and a related section (e.g. delivery days when asked about
@@ -149,6 +151,29 @@ GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
 _clients = {}
 RATE_ERRORS = (groq.RateLimitError, openai.RateLimitError)
 BAD_REQUEST = (groq.BadRequestError, openai.BadRequestError)
+
+
+INTRO_RE = re.compile(r"^\W*(hi|hello|namaste)?\W*i[’']?m zentromart[’']?s ai (support )?assistant[.!,]?\s*", re.I)
+AI_RE = re.compile(r"\bAI\b|एआई|ए आई")
+DEVANAGARI_RE = re.compile(r"[\u0900-\u097F]")
+TIME_RE = re.compile(r"\b\d{1,2}(?::\d{2})?\s?(?:am|pm|a\.m\.|p\.m\.)", re.I)
+MONEY_RE = re.compile(r"₹\s?\d[\d,]*")
+INTRO_EN = "I'm ZentroMart's AI assistant. "
+INTRO_HI = "मैं ज़ेंट्रोमार्ट की एआई सहायक हूँ। "
+UNKNOWN_EN = "I'm sorry, I don't have that information. I can connect you with a human colleague who can help."
+UNKNOWN_HI = "माफ़ कीजिए, मेरे पास यह जानकारी नहीं है। मैं आपको एक सहयोगी से जोड़ सकती हूँ।"
+
+
+VERIFY = """You check a customer-support reply against the SOURCES it was allowed to use.
+Return ONLY JSON: {"supported": true or false, "claim": "..."}.
+supported=false only if the reply states a specific policy, rule, service, time, fee, number or promise
+that the SOURCES do not state or directly imply (for example delivery hours or time slots when the
+sources only give delivery days). Saying it is an AI assistant, greetings, asking the customer for
+details, offering a human colleague and restating the customer's words are always fine."""
+
+
+def _norm(text):
+    return str(text).lower().replace(" ", "").replace(":00", "").replace(".", "")
 
 
 class DailyLimitReached(Exception):
@@ -325,6 +350,39 @@ class SupportAgent:
                          if self.order and self.order.get(f))
         return items, format_context(items) + "\n\n" + calendar_block(f"{message} {dates}")
 
+    # ---------- reply checks enforced in code ----------
+    def _finish_reply(self, reply, data, context, message):
+        """AI introduction only on the first reply; no times of day or rupee amounts that the
+        documents, order record and conversation do not contain."""
+        first = not any(m["role"] == "assistant" for m in self.history)
+        if not first:
+            reply = INTRO_RE.sub("", reply).strip()
+        known = _norm(" ".join([context, self._state(), message] + [m["content"] for m in self.history]))
+        claims = TIME_RE.findall(reply) + MONEY_RE.findall(reply)
+        if any(_norm(c) not in known for c in claims):
+            data.update({"decision": "escalate", "evidence": []})
+            reply = UNKNOWN_HI if DEVANAGARI_RE.search(reply) else UNKNOWN_EN
+        elif str(data.get("decision", "")).lower() == "answer" and not self._supported(reply, context):
+            data.update({"decision": "escalate", "evidence": []})
+            reply = UNKNOWN_HI if DEVANAGARI_RE.search(reply) else UNKNOWN_EN
+        if first and not AI_RE.search(reply):
+            reply = (INTRO_HI if DEVANAGARI_RE.search(reply) else INTRO_EN) + reply
+        return reply
+
+    def _supported(self, reply, context):
+        """Second-opinion check that every policy claim in the reply is in the sources."""
+        cut = context.find("[CALENDAR]")
+        sources, calendar = (context[:cut], context[cut:]) if cut >= 0 else (context, "")
+        prompt = (f"SOURCES:\n{sources[:8000]}\n\n{calendar[:4000]}\n\n{self._state()}\n\n"
+                  f"REPLY: {reply}")
+        try:
+            text = self._helper(max_completion_tokens=400, response_format={"type": "json_object"},
+                                messages=[{"role": "system", "content": VERIFY},
+                                          {"role": "user", "content": prompt}])
+            return json.loads(re.search(r"\{.*\}", text, re.S).group(0)).get("supported", True) is not False
+        except Exception:
+            return True          # never block a reply because the checker itself failed
+
     # ---------- one customer turn ----------
     def turn(self, message):
         t0 = time.time()
@@ -372,6 +430,8 @@ class SupportAgent:
                     "reply": "Sorry, I couldn't complete that. Let me connect you with a colleague."}
 
         reply = self._redact(data.get("reply", ""))
+        reply = self._finish_reply(reply, data, context, message)
+        reply = re.sub(r"\*\*|__|`", "", reply)
         if data.get("_plain") or str(data.get("decision", "")).lower() not in DECISIONS:
             data.update(self._label(message, reply, items, calls))
 
