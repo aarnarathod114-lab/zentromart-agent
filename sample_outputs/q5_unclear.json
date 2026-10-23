@@ -1,0 +1,15 @@
+{
+  "file": "q5_unclear.wav",
+  "transcript": "",
+  "stt_method": "rest",
+  "stt_s": 0.48,
+  "decision": "clarify",
+  "reply": "Sorry, I didn't catch that. Could you please say it again?",
+  "cited_ids": [],
+  "tool_calls": [],
+  "retrieved_chunks": [],
+  "agent_s": 0,
+  "tts_s": 2.16,
+  "reply_audio": "q5_unclear_reply.wav",
+  "error": ""
+}

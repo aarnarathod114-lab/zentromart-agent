@@ -1,0 +1,166 @@
+{
+  "file": "q4_unanswerable.wav",
+  "transcript": "can i schedule a delivery at midnight",
+  "stt_method": "rest",
+  "stt_s": 0.51,
+  "decision": "clarify",
+  "reply": "Sure! Could you please provide your order ID so I can check the delivery options for you?",
+  "cited_ids": [
+    "STY-1",
+    "STY-5"
+  ],
+  "tool_calls": [],
+  "retrieved_chunks": [
+    {
+      "id": "DEL-1",
+      "title": "Delivery and shipping policy",
+      "heading": "Delivery times",
+      "status": "current",
+      "text": "| Delivery type | Metro cities | Other locations |\n| --- | --- | --- |\n| Standard | 3 to 6 business days | 5 to 9 business days |\n| Express (selected pincodes) | Next business day if ordered before 2 pm, otherwise the business day after | Not available |\n\nEach order shows a promised delivery date at checkout. That date is the commitment."
+    },
+    {
+      "id": "CAN-3",
+      "title": "Cancellations policy",
+      "heading": "Grocery delivery slots",
+      "status": "current",
+      "text": "Grocery orders can be cancelled up to 2 hours before the start of the chosen delivery slot.\nIf the slot start time is not in the order record, ask the customer for the time shown in My Orders before confirming whether the cutoff has passed."
+    },
+    {
+      "id": "CAN-2",
+      "title": "Cancellations policy",
+      "heading": "After the order ships",
+      "status": "current",
+      "text": "A shipped order cannot be cancelled. The customer can:\n- refuse the parcel at the door. For cash-on-delivery orders nothing is charged. For prepaid orders the refund follows REF-1 once the parcel returns to the warehouse; or\n- accept the delivery and return the item within its return window, if the category is returnable."
+    },
+    {
+      "id": "DEL-3",
+      "title": "Delivery and shipping policy",
+      "heading": "Delivery attempts",
+      "status": "current",
+      "text": "The courier makes up to 3 delivery attempts. After a failed attempt the customer gets an SMS to reschedule. If the third attempt fails, the parcel is returned to the warehouse (return to origin, RTO) and REF-1 applies."
+    },
+    {
+      "id": "RVP-1",
+      "title": "Reverse pickup: how it works",
+      "heading": "Booking",
+      "status": "current",
+      "text": "Raise the return from My Orders. Choose a pickup slot. The delivery executive will check the item at the door against the condition rules in RET-4."
+    },
+    {
+      "id": "PAY-2",
+      "title": "Payments and cash on delivery",
+      "heading": "Cash on delivery",
+      "status": "current",
+      "text": "COD is available on orders up to ₹10,000, only on pincodes where COD is enabled. A COD fee of ₹25 applies per order."
+    },
+    {
+      "id": "KB-00.1",
+      "title": "About this knowledge base",
+      "heading": "Which document wins",
+      "status": "current",
+      "text": "When two documents disagree, follow this order of precedence:\n\n1. **Policy documents** (doc_type: policy) with status `current`.\n2. **Agent guides** (doc_type: agent_guide).\n3. **Help articles** (doc_type: help).\n4. **FAQs** (doc_type: faq).\n5. **Marketing pages** (doc_type: marketing). These describe benefits in general terms and never override a policy.\n\n\nDocuments marked `status: superseded` are kept for reference only. They apply only to the cases their successor document says they still cover."
+    },
+    {
+      "id": "KB-00.3",
+      "title": "About this knowledge base",
+      "heading": "Business days",
+      "status": "current",
+      "text": "A business day is Monday to Saturday, excluding the warehouse holidays below. Refund and logistics timelines are counted in business days. Return windows are counted in calendar days.\n\n| Date | Holiday |\n| --- | --- |\n| 2026-08-15 | Independence Day |\n| 2026-10-02 | Gandhi Jayanti |\n| 2026-10-19 | Warehouse closure (festival) |\n| 2026-11-09 | Warehouse closure (festival) |"
+    },
+    {
+      "id": "STY-1",
+      "title": "Conversation style",
+      "heading": "Opening",
+      "status": "current",
+      "text": "Introduce yourself as ZentroMart's AI support assistant in your first reply."
+    },
+    {
+      "id": "STY-2",
+      "title": "Conversation style",
+      "heading": "Written replies",
+      "status": "current",
+      "text": "Keep chat replies to two or three short sentences. In emails and tickets, start with a greeting, answer the question first, and end with a sign-off. Write dates with the month name (\"24 October\")."
+    },
+    {
+      "id": "STY-3",
+      "title": "Conversation style",
+      "heading": "Voice replies",
+      "status": "current",
+      "text": "When replying by voice, keep it to two or three short sentences. Say dates with the month name (\"the 24th of October\"), read order IDs in groups of four digits, and say amounts in rupees (\"forty-nine rupees\")."
+    },
+    {
+      "id": "STY-4",
+      "title": "Conversation style",
+      "heading": "Language",
+      "status": "current",
+      "text": "Reply in the language the customer uses. If the customer switches language, switch with them."
+    },
+    {
+      "id": "STY-5",
+      "title": "Conversation style",
+      "heading": "One question at a time",
+      "status": "current",
+      "text": "When you need details, ask for one thing at a time."
+    },
+    {
+      "id": "ESC-1",
+      "title": "Escalation and human handover",
+      "heading": "When to hand over to a human",
+      "status": "current",
+      "text": "Hand over at once when any of these is true:\n\n1. **Damaged, defective or wrong item worth more than ₹10,000.**\n2. **Customer reports an order, payment or account activity they did not make.**\n3. **Customer mentions legal action, a consumer court or a police complaint.**\n4. **Third or later contact about the same issue within 7 days.**\n5. **Refund more than 3 business days past its maximum timeline.**\n6. **Customer asks for a human agent.**\n7. **Product safety risk such as a swelling battery, burning smell, sparks or injury.**\n\nFor the repeat-contact rule, use the `contacts_last_7_days` field returned by order lookup. It counts earlier contacts only, not the current one. Escalate when it is 2 or more."
+    },
+    {
+      "id": "ESC-2",
+      "title": "Escalation and human handover",
+      "heading": "What to do first",
+      "status": "current",
+      "text": "Create a ticket with `create_ticket` before handing over. Tell the customer a human colleague will contact them, and never promise an outcome, amount or time beyond what a policy states."
+    },
+    {
+      "id": "ESC-3",
+      "title": "Escalation and human handover",
+      "heading": "Handover summary",
+      "status": "current",
+      "text": "The ticket summary must contain: the customer's issue, the detected intent, the order ID if any, what the customer has already told you, what you already checked, and the reason for escalation."
+    },
+    {
+      "id": "ESC-4",
+      "title": "Escalation and human handover",
+      "heading": "Things you must never do",
+      "status": "current",
+      "text": "- Promise compensation, refunds or exceptions that a policy does not allow.\n- Say an action is done unless the tool call succeeded.\n- Share another customer's details."
+    },
+    {
+      "id": "IDV-1",
+      "title": "Verifying the customer",
+      "heading": "When verification is needed",
+      "status": "current",
+      "text": "Before sharing anything about a specific order (status, items, address, amounts, refund details), verify the customer. General policy questions need no verification."
+    },
+    {
+      "id": "IDV-2",
+      "title": "Verifying the customer",
+      "heading": "How to verify",
+      "status": "current",
+      "text": "Ask for the order ID, then ask for **one** of: the last 4 digits of the registered phone number, or the delivery pincode for that order. Compare with the `phone_last4` or `delivery_pincode` fields from order lookup."
+    },
+    {
+      "id": "IDV-3",
+      "title": "Verifying the customer",
+      "heading": "If verification fails",
+      "status": "current",
+      "text": "Allow one retry. If it fails again, do not share order details. Offer general policy help and suggest the customer contact support from the registered phone number."
+    },
+    {
+      "id": "IDV-4",
+      "title": "Verifying the customer",
+      "heading": "Never read out",
+      "status": "current",
+      "text": "Never read out the full phone number, email or street address, even to a verified customer."
+    }
+  ],
+  "agent_s": 47.41,
+  "tts_s": 1.95,
+  "reply_audio": "q4_unanswerable_reply.wav",
+  "error": ""
+}

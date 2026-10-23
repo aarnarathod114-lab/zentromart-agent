@@ -1,0 +1,165 @@
+{
+  "file": "q2_refund_upi.wav",
+  "transcript": "if my refund goes to upi how many days will it take",
+  "stt_method": "rest",
+  "stt_s": 0.5,
+  "decision": "answer",
+  "reply": "For refunds to a UPI ID, the amount will reach you in 1 to 3 business days after the refund is initiated.",
+  "cited_ids": [
+    "REF-2"
+  ],
+  "tool_calls": [],
+  "retrieved_chunks": [
+    {
+      "id": "REF-2",
+      "title": "Refunds policy",
+      "heading": "How long refunds take after initiation",
+      "status": "current",
+      "text": "Refunds go back to the original payment method. Timelines are counted in business days from the day the refund is initiated.\n\n| Payment method | Time to reach you |\n| --- | --- |\n| UPI | 1 to 3 business days |\n| Credit or debit card | 5 to 7 business days |\n| Net banking | 3 to 5 business days |\n| ZentroMart Wallet | Instant, within 2 hours |\n| Bank transfer (NEFT) for cash-on-delivery orders | 5 to 7 business days |\n| ZentroMart Wallet for cash-on-delivery orders | Instant, within 2 hours |"
+    },
+    {
+      "id": "RET-7",
+      "title": "Returns policy",
+      "heading": "After pickup",
+      "status": "current",
+      "text": "Returned items go through a quality check (QC) at the warehouse. The refund is initiated within 2 business days of pickup once the item passes QC. For ZentroMart Plus members, the refund is initiated at the time of pickup. Refund timelines after initiation are in the Refunds policy."
+    },
+    {
+      "id": "REF-1",
+      "title": "Refunds policy",
+      "heading": "When a refund is initiated",
+      "status": "current",
+      "text": "- **Cancelled before shipping:** immediately on cancellation.\n- **Returned item:** after the item passes quality check, within 2 business days of pickup. ZentroMart Plus members: at pickup.\n- **Prepaid order refused at the door or not delivered after 3 attempts:** once the parcel reaches the warehouse, usually 7 to 10 calendar days after the last delivery attempt."
+    },
+    {
+      "id": "PLS-3",
+      "title": "ZentroMart Plus membership",
+      "heading": "Cancelling membership",
+      "status": "current",
+      "text": "Membership can be cancelled within 14 days of purchase for a full refund if no benefit has been used."
+    },
+    {
+      "id": "FAQ-1",
+      "title": "Frequently asked questions",
+      "heading": "How long do refunds take?",
+      "status": "current",
+      "text": "Refunds usually take 5 to 7 days to reach your account."
+    },
+    {
+      "id": "KB-00.3",
+      "title": "About this knowledge base",
+      "heading": "Business days",
+      "status": "current",
+      "text": "A business day is Monday to Saturday, excluding the warehouse holidays below. Refund and logistics timelines are counted in business days. Return windows are counted in calendar days.\n\n| Date | Holiday |\n| --- | --- |\n| 2026-08-15 | Independence Day |\n| 2026-10-02 | Gandhi Jayanti |\n| 2026-10-19 | Warehouse closure (festival) |\n| 2026-11-09 | Warehouse closure (festival) |"
+    },
+    {
+      "id": "products.csv:BKS-0058",
+      "title": "Product catalog",
+      "heading": "",
+      "status": "current",
+      "text": "sku: BKS-0058; title: Pagecraft Guide: Learn Python in 30 Days; brand: Pagecraft; return_category: books_media; price_inr: 789; fulfilled_by: ZentroMart; assured: False; warranty_months: 0; description: Pagecraft Guide: Learn Python in 30 Days. Sold on ZentroMart."
+    },
+    {
+      "id": "KB-00.1",
+      "title": "About this knowledge base",
+      "heading": "Which document wins",
+      "status": "current",
+      "text": "When two documents disagree, follow this order of precedence:\n\n1. **Policy documents** (doc_type: policy) with status `current`.\n2. **Agent guides** (doc_type: agent_guide).\n3. **Help articles** (doc_type: help).\n4. **FAQs** (doc_type: faq).\n5. **Marketing pages** (doc_type: marketing). These describe benefits in general terms and never override a policy.\n\n\nDocuments marked `status: superseded` are kept for reference only. They apply only to the cases their successor document says they still cover."
+    },
+    {
+      "id": "STY-1",
+      "title": "Conversation style",
+      "heading": "Opening",
+      "status": "current",
+      "text": "Introduce yourself as ZentroMart's AI support assistant in your first reply."
+    },
+    {
+      "id": "STY-2",
+      "title": "Conversation style",
+      "heading": "Written replies",
+      "status": "current",
+      "text": "Keep chat replies to two or three short sentences. In emails and tickets, start with a greeting, answer the question first, and end with a sign-off. Write dates with the month name (\"24 October\")."
+    },
+    {
+      "id": "STY-3",
+      "title": "Conversation style",
+      "heading": "Voice replies",
+      "status": "current",
+      "text": "When replying by voice, keep it to two or three short sentences. Say dates with the month name (\"the 24th of October\"), read order IDs in groups of four digits, and say amounts in rupees (\"forty-nine rupees\")."
+    },
+    {
+      "id": "STY-4",
+      "title": "Conversation style",
+      "heading": "Language",
+      "status": "current",
+      "text": "Reply in the language the customer uses. If the customer switches language, switch with them."
+    },
+    {
+      "id": "STY-5",
+      "title": "Conversation style",
+      "heading": "One question at a time",
+      "status": "current",
+      "text": "When you need details, ask for one thing at a time."
+    },
+    {
+      "id": "ESC-1",
+      "title": "Escalation and human handover",
+      "heading": "When to hand over to a human",
+      "status": "current",
+      "text": "Hand over at once when any of these is true:\n\n1. **Damaged, defective or wrong item worth more than ₹10,000.**\n2. **Customer reports an order, payment or account activity they did not make.**\n3. **Customer mentions legal action, a consumer court or a police complaint.**\n4. **Third or later contact about the same issue within 7 days.**\n5. **Refund more than 3 business days past its maximum timeline.**\n6. **Customer asks for a human agent.**\n7. **Product safety risk such as a swelling battery, burning smell, sparks or injury.**\n\nFor the repeat-contact rule, use the `contacts_last_7_days` field returned by order lookup. It counts earlier contacts only, not the current one. Escalate when it is 2 or more."
+    },
+    {
+      "id": "ESC-2",
+      "title": "Escalation and human handover",
+      "heading": "What to do first",
+      "status": "current",
+      "text": "Create a ticket with `create_ticket` before handing over. Tell the customer a human colleague will contact them, and never promise an outcome, amount or time beyond what a policy states."
+    },
+    {
+      "id": "ESC-3",
+      "title": "Escalation and human handover",
+      "heading": "Handover summary",
+      "status": "current",
+      "text": "The ticket summary must contain: the customer's issue, the detected intent, the order ID if any, what the customer has already told you, what you already checked, and the reason for escalation."
+    },
+    {
+      "id": "ESC-4",
+      "title": "Escalation and human handover",
+      "heading": "Things you must never do",
+      "status": "current",
+      "text": "- Promise compensation, refunds or exceptions that a policy does not allow.\n- Say an action is done unless the tool call succeeded.\n- Share another customer's details."
+    },
+    {
+      "id": "IDV-1",
+      "title": "Verifying the customer",
+      "heading": "When verification is needed",
+      "status": "current",
+      "text": "Before sharing anything about a specific order (status, items, address, amounts, refund details), verify the customer. General policy questions need no verification."
+    },
+    {
+      "id": "IDV-2",
+      "title": "Verifying the customer",
+      "heading": "How to verify",
+      "status": "current",
+      "text": "Ask for the order ID, then ask for **one** of: the last 4 digits of the registered phone number, or the delivery pincode for that order. Compare with the `phone_last4` or `delivery_pincode` fields from order lookup."
+    },
+    {
+      "id": "IDV-3",
+      "title": "Verifying the customer",
+      "heading": "If verification fails",
+      "status": "current",
+      "text": "Allow one retry. If it fails again, do not share order details. Offer general policy help and suggest the customer contact support from the registered phone number."
+    },
+    {
+      "id": "IDV-4",
+      "title": "Verifying the customer",
+      "heading": "Never read out",
+      "status": "current",
+      "text": "Never read out the full phone number, email or street address, even to a verified customer."
+    }
+  ],
+  "agent_s": 49.47,
+  "tts_s": 2.45,
+  "reply_audio": "q2_refund_upi_reply.wav",
+  "error": ""
+}

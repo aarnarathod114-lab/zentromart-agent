@@ -1,0 +1,165 @@
+{
+  "file": "q3_hinglish_cod.wav",
+  "transcript": "kya cash on delivery pay extra charge lagta hai",
+  "stt_method": "rest",
+  "stt_s": 0.49,
+  "decision": "answer",
+  "reply": "Haan, cash on delivery par har order ke liye ₹25 ka fee lagta hai.",
+  "cited_ids": [
+    "PAY-2"
+  ],
+  "tool_calls": [],
+  "retrieved_chunks": [
+    {
+      "id": "PAY-2",
+      "title": "Payments and cash on delivery",
+      "heading": "Cash on delivery",
+      "status": "current",
+      "text": "COD is available on orders up to ₹10,000, only on pincodes where COD is enabled. A COD fee of ₹25 applies per order."
+    },
+    {
+      "id": "PAY-1",
+      "title": "Payments and cash on delivery",
+      "heading": "Payment methods",
+      "status": "current",
+      "text": "UPI, credit and debit cards, net banking, ZentroMart Wallet and cash on delivery (COD)."
+    },
+    {
+      "id": "REF-5",
+      "title": "Refunds policy",
+      "heading": "Delivery and COD fees",
+      "status": "current",
+      "text": "Delivery fees and the ₹25 cash-on-delivery fee are refunded only when the whole order is cancelled before shipping or returned because it was damaged, defective or wrong."
+    },
+    {
+      "id": "REF-3",
+      "title": "Refunds policy",
+      "heading": "Cash-on-delivery refunds",
+      "status": "current",
+      "text": "For cash-on-delivery orders, the customer chooses either ZentroMart Wallet (instant) or a bank transfer. Bank transfers start only after the bank account details are verified, then take 5 to 7 business days."
+    },
+    {
+      "id": "DEL-5",
+      "title": "Delivery and shipping policy",
+      "heading": "Where we deliver",
+      "status": "current",
+      "text": "ZentroMart delivers only within India, to pincodes listed as serviceable in the pincode table. Cash on delivery and Express are available only where the pincode table says so (`cod_available`, `express_available`). Not every metro pincode has Express."
+    },
+    {
+      "id": "DEL-2",
+      "title": "Delivery and shipping policy",
+      "heading": "Delivery fees",
+      "status": "current",
+      "text": "Standard delivery is free on orders of ₹499 or more; below that a ₹40 fee applies. Express delivery costs ₹79 and is free for ZentroMart Plus members."
+    },
+    {
+      "id": "KB-00.1",
+      "title": "About this knowledge base",
+      "heading": "Which document wins",
+      "status": "current",
+      "text": "When two documents disagree, follow this order of precedence:\n\n1. **Policy documents** (doc_type: policy) with status `current`.\n2. **Agent guides** (doc_type: agent_guide).\n3. **Help articles** (doc_type: help).\n4. **FAQs** (doc_type: faq).\n5. **Marketing pages** (doc_type: marketing). These describe benefits in general terms and never override a policy.\n\n\nDocuments marked `status: superseded` are kept for reference only. They apply only to the cases their successor document says they still cover."
+    },
+    {
+      "id": "KB-00.3",
+      "title": "About this knowledge base",
+      "heading": "Business days",
+      "status": "current",
+      "text": "A business day is Monday to Saturday, excluding the warehouse holidays below. Refund and logistics timelines are counted in business days. Return windows are counted in calendar days.\n\n| Date | Holiday |\n| --- | --- |\n| 2026-08-15 | Independence Day |\n| 2026-10-02 | Gandhi Jayanti |\n| 2026-10-19 | Warehouse closure (festival) |\n| 2026-11-09 | Warehouse closure (festival) |"
+    },
+    {
+      "id": "STY-1",
+      "title": "Conversation style",
+      "heading": "Opening",
+      "status": "current",
+      "text": "Introduce yourself as ZentroMart's AI support assistant in your first reply."
+    },
+    {
+      "id": "STY-2",
+      "title": "Conversation style",
+      "heading": "Written replies",
+      "status": "current",
+      "text": "Keep chat replies to two or three short sentences. In emails and tickets, start with a greeting, answer the question first, and end with a sign-off. Write dates with the month name (\"24 October\")."
+    },
+    {
+      "id": "STY-3",
+      "title": "Conversation style",
+      "heading": "Voice replies",
+      "status": "current",
+      "text": "When replying by voice, keep it to two or three short sentences. Say dates with the month name (\"the 24th of October\"), read order IDs in groups of four digits, and say amounts in rupees (\"forty-nine rupees\")."
+    },
+    {
+      "id": "STY-4",
+      "title": "Conversation style",
+      "heading": "Language",
+      "status": "current",
+      "text": "Reply in the language the customer uses. If the customer switches language, switch with them."
+    },
+    {
+      "id": "STY-5",
+      "title": "Conversation style",
+      "heading": "One question at a time",
+      "status": "current",
+      "text": "When you need details, ask for one thing at a time."
+    },
+    {
+      "id": "ESC-1",
+      "title": "Escalation and human handover",
+      "heading": "When to hand over to a human",
+      "status": "current",
+      "text": "Hand over at once when any of these is true:\n\n1. **Damaged, defective or wrong item worth more than ₹10,000.**\n2. **Customer reports an order, payment or account activity they did not make.**\n3. **Customer mentions legal action, a consumer court or a police complaint.**\n4. **Third or later contact about the same issue within 7 days.**\n5. **Refund more than 3 business days past its maximum timeline.**\n6. **Customer asks for a human agent.**\n7. **Product safety risk such as a swelling battery, burning smell, sparks or injury.**\n\nFor the repeat-contact rule, use the `contacts_last_7_days` field returned by order lookup. It counts earlier contacts only, not the current one. Escalate when it is 2 or more."
+    },
+    {
+      "id": "ESC-2",
+      "title": "Escalation and human handover",
+      "heading": "What to do first",
+      "status": "current",
+      "text": "Create a ticket with `create_ticket` before handing over. Tell the customer a human colleague will contact them, and never promise an outcome, amount or time beyond what a policy states."
+    },
+    {
+      "id": "ESC-3",
+      "title": "Escalation and human handover",
+      "heading": "Handover summary",
+      "status": "current",
+      "text": "The ticket summary must contain: the customer's issue, the detected intent, the order ID if any, what the customer has already told you, what you already checked, and the reason for escalation."
+    },
+    {
+      "id": "ESC-4",
+      "title": "Escalation and human handover",
+      "heading": "Things you must never do",
+      "status": "current",
+      "text": "- Promise compensation, refunds or exceptions that a policy does not allow.\n- Say an action is done unless the tool call succeeded.\n- Share another customer's details."
+    },
+    {
+      "id": "IDV-1",
+      "title": "Verifying the customer",
+      "heading": "When verification is needed",
+      "status": "current",
+      "text": "Before sharing anything about a specific order (status, items, address, amounts, refund details), verify the customer. General policy questions need no verification."
+    },
+    {
+      "id": "IDV-2",
+      "title": "Verifying the customer",
+      "heading": "How to verify",
+      "status": "current",
+      "text": "Ask for the order ID, then ask for **one** of: the last 4 digits of the registered phone number, or the delivery pincode for that order. Compare with the `phone_last4` or `delivery_pincode` fields from order lookup."
+    },
+    {
+      "id": "IDV-3",
+      "title": "Verifying the customer",
+      "heading": "If verification fails",
+      "status": "current",
+      "text": "Allow one retry. If it fails again, do not share order details. Offer general policy help and suggest the customer contact support from the registered phone number."
+    },
+    {
+      "id": "IDV-4",
+      "title": "Verifying the customer",
+      "heading": "Never read out",
+      "status": "current",
+      "text": "Never read out the full phone number, email or street address, even to a verified customer."
+    }
+  ],
+  "agent_s": 45.63,
+  "tts_s": 2.8,
+  "reply_audio": "q3_hinglish_cod_reply.wav",
+  "error": ""
+}
